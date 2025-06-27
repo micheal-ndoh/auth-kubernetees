@@ -1,0 +1,20 @@
+wwwroot/*.js
+node_modules/
+.openapi-generator/
+.openapi-generator-ignore
+git_push.sh
+test-client.js
+README.md
+docs/
+package-lock.json
+package.json
+
+# Logs
+*.log
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+Desktop.ini
