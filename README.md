@@ -178,7 +178,7 @@ cd auth_api2
 
 ### 2. Setup Environment Variables
 Create a `.env` file in the root with:
-```env
+```**env**
 JWT_SALT=your_base64_16byte_salt
 JWT_SECRET=your_jwt_secret
 JWT_EXPIRATION=86400

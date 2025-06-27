@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: auth-api-backend:latest
+        image: ghcr.io/micheal-ndoh/auth-kubernetees-backend:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
         env:
