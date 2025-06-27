@@ -1,16 +1,17 @@
-FROM rust:latest AS builder
+FROM debian:bookworm-slim
+
+# Install Rust and build dependencies
+RUN apt-get update && \
+    apt-get install -y curl build-essential pkg-config libssl-dev && \
+    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+    . $HOME/.cargo/env && \
+    rustup default stable
 
 WORKDIR /app
 COPY . .
 
-# Build with default target (no forced static linking for proc-macros)
-RUN cargo build --release
-
-FROM debian:bookworm-slim
-
-RUN apt-get update && apt-get install -y libssl3 ca-certificates && rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY --from=builder /app/target/release/auth_api /app/auth_api
+# Clean and build the release binary
+RUN . $HOME/.cargo/env && cargo clean && cargo build --release
 
 EXPOSE 3000
-CMD ["/app/auth_api"]
+CMD ["/app/target/release/auth_api"]
