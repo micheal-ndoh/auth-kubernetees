@@ -180,20 +180,6 @@ spec:
 
 ## 7. Key Commands for Deployment and Management
 
-### Build and Push Docker Images
-```bash
-# Backend
-cd /path/to/project
-# (If using buildx and GHCR)
-docker buildx build -t ghcr.io/<your-gh-username>/<repo>-backend:latest .
-docker push ghcr.io/<your-gh-username>/<repo>-backend:latest
-
-# Frontend
-cd front-end
-# (If using buildx and GHCR)
-docker buildx build -t ghcr.io/<your-gh-username>/<repo>-frontend:latest -f Dockerfile .
-docker push ghcr.io/<your-gh-username>/<repo>-frontend:latest
-```
 
 ### Deploy to Kubernetes
 ```bash
