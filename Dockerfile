@@ -1,12 +1,19 @@
-# Backend Dockerfile
-FROM rust:latest AS builder
-WORKDIR /usr/src/app
-COPY . .
-RUN cargo build --release
-
+# Single-stage Dockerfile for Rust backend
 FROM debian:bullseye-slim
+
+# Install Rust and build dependencies
+RUN apt-get update && \
+    apt-get install -y curl build-essential pkg-config libssl-dev && \
+    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
+    . $HOME/.cargo/env && \
+    rustup default stable
+
 WORKDIR /app
-COPY --from=builder /usr/src/app/target/release/auth_api /app/auth_api
-ENV RUST_LOG=info
+COPY . .
+
+# Build the release binary
+RUN . $HOME/.cargo/env && cargo build --release
+
+# Expose the port and run the binary
 EXPOSE 3000
-CMD ["/app/auth_api"] 
+CMD ["/app/target/release/auth_api"] 
