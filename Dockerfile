@@ -1,23 +1,16 @@
-# Use a more recent base image
-FROM debian:bookworm-slim
-
-# Install dependencies for building Rust applications
-RUN apt-get update && \
-    apt-get install -y curl build-essential pkg-config libssl-dev musl-tools && \
-    curl https://sh.rustup.rs -sSf | sh -s -- -y && \
-    . $HOME/.cargo/env && \
-    rustup default stable
-
-# Set environment variables for static linking
-ENV RUSTFLAGS="-C target-feature=+crt-static"
-ENV CARGO_TARGET_DIR=/app/target
+FROM rust:1.77-slim as builder
 
 WORKDIR /app
 COPY . .
 
-# Build the release binary
-RUN . $HOME/.cargo/env && cargo build --release
+# Build with default target (no forced static linking for proc-macros)
+RUN cargo build --release
 
-# Expose the port and run the binary
+FROM debian:bookworm-slim
+
+RUN apt-get update && apt-get install -y libssl3 ca-certificates && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY --from=builder /app/target/release/auth_api /app/auth_api
+
 EXPOSE 3000
-CMD ["/app/target/release/auth_api"]
+CMD ["/app/auth_api"]
