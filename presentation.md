@@ -1,4 +1,4 @@
-# Kubernetes Deployment Presentation (Verbose)
+# Kubernetes Deployment Presentation
 
 ## 1. Overview
 - This project is deployed using Kubernetes, which manages containers for both backend and frontend.
@@ -182,4 +182,71 @@ spec:
 ## 6. Summary
 - The deployment leverages Kubernetes for scalability, security, and automation.
 - All configuration and secrets are managed declaratively.
-- CI/CD pipeline ensures a smooth, automated deployment process. 
+- CI/CD pipeline ensures a smooth, automated deployment process.
+
+---
+
+## 7. Key Commands for Deployment and Management
+
+### Build and Push Docker Images
+```bash
+# Backend
+cd /path/to/project
+# (If using buildx and GHCR)
+docker buildx build -t ghcr.io/<your-gh-username>/<repo>-backend:latest .
+docker push ghcr.io/<your-gh-username>/<repo>-backend:latest
+
+# Frontend
+cd front-end
+# (If using buildx and GHCR)
+docker buildx build -t ghcr.io/<your-gh-username>/<repo>-frontend:latest -f Dockerfile .
+docker push ghcr.io/<your-gh-username>/<repo>-frontend:latest
+```
+
+### Deploy to Kubernetes
+```bash
+# Apply all manifests in the k8s folder
+kubectl apply -f k8s/
+```
+
+### Get Info About Deployments, Pods, and Services
+```bash
+# List all deployments
+kubectl get deployments
+
+# List all pods
+kubectl get pods
+
+# List all services
+kubectl get services
+
+# Get detailed info about a deployment
+kubectl describe deployment <deployment-name>
+
+# Get logs from a pod
+kubectl logs <pod-name>
+
+# Get events in the cluster
+kubectl get events
+```
+
+### Rollout and Restart
+```bash
+# Restart a deployment (e.g., after pushing a new image)
+kubectl rollout restart deployment <deployment-name>
+
+# Check rollout status
+kubectl rollout status deployment <deployment-name>
+```
+
+### Using k9s (Terminal UI for Kubernetes)
+```bash
+# Start k9s (must be installed)
+k9s
+
+# In k9s:
+# - Use arrow keys to navigate resources (pods, deployments, services, etc.)
+# - Press 'd' to describe, 'l' to view logs, 'r' to restart, etc.
+# - Use ':' to enter commands (e.g., :deployments, :services)
+# - Press '?' for help inside k9s
+``` 
