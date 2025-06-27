@@ -160,15 +160,7 @@ spec:
 
 ---
 
-## 4. Deployment Process (Recap)
-1. **Build and Push Images:**
-   - Triggered by GitHub Actions on push to `main`.
-   - Images are tagged and pushed to GHCR.
-2. **Apply Kubernetes Manifests:**
-   - Use `kubectl apply -f k8s/` to deploy all resources.
-3. **Accessing the App:**
-   - The frontend is exposed via a NodePort service.
-   - Access using `http://<node-ip>:<nodeport>` (e.g., Minikube IP and assigned port).
+
 
 ---
 
