@@ -4,3 +4,5 @@ metadata:
   name: backend-config
 data:
   JWT_EXPIRATION: "86400" 
+
+
