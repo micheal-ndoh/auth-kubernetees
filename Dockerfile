@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 COPY . .
 RUN cargo build --release
 
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 WORKDIR /app
 COPY --from=builder /usr/src/app/target/release/auth_api /app/auth_api
 ENV RUST_LOG=info
