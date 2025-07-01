@@ -16,7 +16,7 @@ spec:
         - name: ghcr-secret
       containers:
       - name: backend
-        image: ghcr.io/micheal-ndoh/auth-kubernetees-backend:936797d600c786b6929eeea8b0a607b5bdac15c1
+        image: ghcr.io/micheal-ndoh/auth-kubernetees-backend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
