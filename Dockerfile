@@ -1,4 +1,4 @@
-FROM debian:bookworm-slim
+FROM ubuntu:latest
 
 # Install Rust and build dependencies
 RUN apt-get update && \
@@ -15,3 +15,4 @@ RUN . $HOME/.cargo/env && cargo clean && cargo build --release
 
 EXPOSE 3000
 CMD ["/app/target/release/auth_api"]
+
